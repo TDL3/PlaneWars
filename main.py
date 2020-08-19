@@ -11,7 +11,7 @@ class PlaneWars():
         self.clock = pygame.time.Clock()
         self.font = pygame.font.Font(None, 30)
         pygame.display.set_caption("Plane wars")
-        pygame.time.set_timer(definitions.ENEMY_INIT_EVENT, definitions.ENEMY_INIT_TIME)
+        pygame.time.set_timer(definitions.ENEMY_SPAWN_EVENT, definitions.ENEMY_SPAWN_TIME)
         self.__create_sprites()
         
     def start_game(self):
@@ -43,13 +43,13 @@ class PlaneWars():
                 self.__game_over()
             if event.type == definitions.HERO_FIRE_EVENT:
                 self.hero.fire()
-            if event.type == definitions.ENEMY_INIT_EVENT:
+            if event.type == definitions.ENEMY_SPAWN_EVENT:
                 enemy1 = Enemy("./images/enemy1.png")
                 self.enemy_group.add(enemy1)
 
         keys_pressed = pygame.key.get_pressed()
         if not keys_pressed[pygame.K_SPACE]:
-            pygame.time.set_timer(definitions.HERO_FIRE_EVENT,definitions.HERO_FIRE_TIME)
+            pygame.time.set_timer(definitions.HERO_FIRE_EVENT,definitions.HERO_FIRE_INTERVAL)
         if keys_pressed[pygame.K_UP] or keys_pressed[pygame.K_w]:
             self.hero.speed = -4
         elif keys_pressed[pygame.K_DOWN] or keys_pressed[pygame.K_s]:
@@ -78,7 +78,6 @@ class PlaneWars():
         
 
     def __game_over(self):
-        print("正在退出游戏...")
         pygame.quit()
         exit(0)
 

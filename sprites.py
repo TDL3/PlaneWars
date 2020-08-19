@@ -1,20 +1,21 @@
 import pygame
 import random
 import definitions
+
 SCREEN_RECT = definitions.SCREEN_RECT
-# 抽象类：
+
 class GameSprite(pygame.sprite.Sprite):
     def __init__(self, image_dir, speed=1):
-        super().__init__()  # 初始化父类的构造函数
-        self.image = pygame.image.load(image_dir)  # image成员加载图片
-        self.rect = self.image.get_rect()  # rect(x,y,width,height) get_rect()-->Rect(0,0,image_width,image_height)
-        self.speed = speed  # 设置图片移动的初始化速度y轴
+        super().__init__()
+        self.image = pygame.image.load(image_dir)
+        self.rect = self.image.get_rect()
+        self.speed = speed
     
     def update_image(self, img):
         self.image = img
 
     def update(self):
-        self.rect.y += self.speed  # 默认移动的方向向下
+        self.rect.y += self.speed
 
 
 class Background(GameSprite):
@@ -62,21 +63,21 @@ class Hero(GameSprite):
                 self.image = pygame.image.load("./images/me2.png")
                 self.changed_flag = True
         
-        # 飞机横向移动
         self.rect.x += self.speed_x
-        # 飞机纵向移动
         self.rect.y += self.speed
-        #保证飞机在屏幕内：
+        # Ensure plane stay inside the window
+        # head
         if self.rect.y <= 0:
-            self.rect.y = 0   # 保证飞机头不出屏幕
+            self.rect.y = 0
+        # tail
         if self.rect.bottom > SCREEN_RECT.height:
-            self.rect.bottom = SCREEN_RECT.height  # 保证飞机尾不出屏幕
-
+            self.rect.bottom = SCREEN_RECT.height
+        # left wing
         if self.rect.centerx < 0:
-            self.rect.centerx = 0  # 保证左边不飞出
-
+            self.rect.centerx = 0
+        # right wing
         if self.rect.centerx > SCREEN_RECT.width:
-            self.rect.centerx = SCREEN_RECT.width  # 保证右边不飞出
+            self.rect.centerx = SCREEN_RECT.width
 
     def fire(self):
         bullet1 = Bullet()
