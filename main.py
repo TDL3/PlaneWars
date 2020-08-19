@@ -1,5 +1,6 @@
 import pygame
 import definitions
+from sprites import Hero, Enemy, Bullet, Background
 
 
 class PlaneWars():
@@ -28,9 +29,9 @@ class PlaneWars():
             pygame.display.update()
 
     def __create_sprites(self):
-        bg1 =definitions.BgSprite("./images/background.png")
-        bg2 = definitions.BgSprite("./images/background.png",True)
-        self.hero = definitions.Hero("./images/me1.png")
+        bg1 = Background("./images/background.png")
+        bg2 = Background("./images/background.png",True)
+        self.hero = Hero("./images/me1.png")
         self.bg_group = pygame.sprite.Group(bg1,bg2)
         self.hero_group = pygame.sprite.Group(self.hero)
         self.enemy_group = pygame.sprite.Group()
@@ -43,7 +44,7 @@ class PlaneWars():
             if event.type == definitions.HERO_FIRE_EVENT:
                 self.hero.fire()
             if event.type == definitions.ENEMY_INIT_EVENT:
-                enemy1 = definitions.Enemy("./images/enemy1.png")
+                enemy1 = Enemy("./images/enemy1.png")
                 self.enemy_group.add(enemy1)
 
         keys_pressed = pygame.key.get_pressed()
